@@ -1,0 +1,92 @@
+.root {
+    -fx-font-family: 'Segoe UI';
+    -fx-background-color: linear-gradient(to bottom right, #182848, #4b6cb7);
+}
+
+/* TOP BAR */
+.topbar {
+    -fx-padding: 15;
+    -fx-background-color: rgba(255,255,255,0.1);
+    -fx-border-width: 0 0 2 0;
+    -fx-border-color: rgba(255,255,255,0.2);
+}
+
+.title {
+    -fx-font-size: 22px;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+}
+
+/* SIDEBAR PANEL */
+.sidebar {
+    -fx-background-color: rgba(255,255,255,0.07);
+    -fx-pref-width: 350px;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 25, 0.3, 2, 2);
+}
+
+/* CARD */
+.card {
+    -fx-background-color: rgba(255, 255, 255, 0.12);
+    -fx-padding: 15;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 30, 0.4, 0, 4);
+    -fx-transition: 0.3s;
+}
+.card:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Titles */
+.card-title {
+    -fx-font-size: 16px;
+    -fx-text-fill: #AEEEEE;
+    -fx-font-weight: bold;
+}
+
+/* Sliders */
+.slider .track {
+    -fx-background-color: rgba(255,255,255,0.3);
+}
+.slider .thumb {
+    -fx-background-color: #00E5FF;
+    -fx-background-radius: 999;
+}
+
+/* Buttons */
+.primary-btn {
+    -fx-background-color: #FFB400;
+    -fx-text-fill: black;
+    -fx-background-radius: 10;
+    -fx-font-weight: bold;
+}
+.secondary-btn {
+    -fx-background-color: #00D1FF;
+    -fx-text-fill: black;
+    -fx-background-radius: 10;
+    -fx-font-weight: bold;
+}
+.apply-btn {
+    -fx-background-color: #00FF88;
+    -fx-text-fill: black;
+    -fx-background-radius: 12;
+    -fx-font-weight: bold;
+    -fx-padding: 8 16;
+}
+
+/* Hover Effects */
+.primary-btn:hover,
+.secondary-btn:hover,
+.apply-btn:hover {
+    -fx-opacity: 0.8;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-cursor: hand;
+}
+
+/* Canvas area */
+.canvas-container {
+    -fx-padding: 20;
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-background-radius: 25;
+}

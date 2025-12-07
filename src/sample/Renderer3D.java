@@ -5,56 +5,55 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Renderer3D {
-
-    private Camera3D camera;
-    private Canvas canvas;
-    private GraphicsContext gc;
+    private final Camera3D camera;
+    private final Canvas canvas;
 
     public Renderer3D(Camera3D camera, Canvas canvas){
         this.camera = camera;
         this.canvas = canvas;
-        this.gc = canvas.getGraphicsContext2D();
     }
 
     public void clearAndDrawGrid(){
-        gc.setFill(Color.web("#222"));
-        gc.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
+        GraphicsContext g = canvas.getGraphicsContext2D();
+        double w = canvas.getWidth(), h = canvas.getHeight();
+        g.setFill(Color.web("#0b1220"));
+        g.fillRect(0,0,w,h);
 
-        gc.setStroke(Color.web("#333"));
-        gc.setLineWidth(1);
-
-        for (int i=0;i<canvas.getWidth();i+=40){
-            gc.strokeLine(i, 0, i, canvas.getHeight());
-        }
-        for (int i=0;i<canvas.getHeight();i+=40){
-            gc.strokeLine(0, i, canvas.getWidth(), i);
-        }
+        g.setStroke(Color.web("#172229"));
+        for (double x=0;x<=w;x+=40) g.strokeLine(x,0,x,h);
+        for (double y=0;y<=h;y+=40) g.strokeLine(0,y,w,y);
     }
 
+    // draw edges of object (project with camera rotation)
     public void drawObject(Object3D obj){
+        GraphicsContext g = canvas.getGraphicsContext2D();
         Matrix3 camR = camera.getRotationMatrix();
 
-        double cx = canvas.getWidth()/2;
-        double cy = canvas.getHeight()/2;
+        double cx = canvas.getWidth()/2.0;
+        double cy = canvas.getHeight()/2.0;
+        double scale = 1.0 * (Math.min(canvas.getWidth(), canvas.getHeight())/600.0) * camera.zoom;
 
-        Vector3[] projected = new Vector3[obj.vertices.size()];
-
+        // project all vertices
+        Vector3[] proj = new Vector3[obj.vertices.size()];
         for (int i=0;i<obj.vertices.size();i++){
-            Vector3 v = camR.transform(obj.vertices.get(i));
-
-            double px = cx + v.x * camera.zoom;
-            double py = cy - v.y * camera.zoom;
-
-            projected[i] = new Vector3(px, py, v.z);
+            Vector3 v = obj.vertices.get(i);
+            Vector3 rv = camR.transform(v); // rotated
+            double px = cx + rv.x * scale;
+            double py = cy - rv.y * scale; // Y-up to screen Y-down
+            proj[i] = new Vector3(px, py, rv.z);
         }
 
-        gc.setStroke(Color.WHITE);
-        gc.setLineWidth(2);
-
+        // draw edges
+        g.setStroke(Color.web("#bfe8ff"));
+        g.setLineWidth(2);
         for (int[] e : obj.edges){
-            Vector3 a = projected[e[0]];
-            Vector3 b = projected[e[1]];
-            gc.strokeLine(a.x, a.y, b.x, b.y);
+            Vector3 a = proj[e[0]];
+            Vector3 b = proj[e[1]];
+            g.strokeLine(a.x, a.y, b.x, b.y);
         }
+
+        // draw origin small
+        g.setFill(Color.WHITE);
+        g.fillOval(cx-3, cy-3, 6, 6);
     }
 }

@@ -9,11 +9,10 @@ public class Vector3 {
         this.z = z;
     }
 
-    public Vector3 cloneV(){
-        return new Vector3(x, y, z);
-    }
+    public Vector3 cloneV(){ return new Vector3(x, y, z); }
 
-    public String toString(){
-        return String.format("(%.2f, %.2f, %.2f)", x, y, z);
+    @Override
+    public String toString() {
+        return String.format("(%.3f, %.3f, %.3f)", x, y, z);
     }
 }
