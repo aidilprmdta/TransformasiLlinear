@@ -9,7 +9,7 @@ import javafx.scene.Parent;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/sample/layout.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("layout.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("3D Linear Transform Visualizer");
         stage.setScene(scene);
