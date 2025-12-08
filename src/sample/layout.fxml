@@ -9,116 +9,139 @@
             fx:controller="sample.Controller"
             stylesheets="@style.css">
 
+    <!-- TOP BAR -->
     <top>
-        <HBox spacing="20" alignment="CENTER_LEFT" styleClass="topbar">
-            <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+        <HBox spacing="10" alignment="CENTER_LEFT" styleClass="topbar">
+            <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+            <Button fx:id="btnToggleSidebar" text="≡" styleClass="toggle-btn"/>
             <Label text="3D Linear Transform Visualizer" styleClass="title"/>
             <HBox HBox.hgrow="ALWAYS"/>
-            <Button text="Reset" fx:id="btnReset" styleClass="primary-btn"/>
-            <Button text="Undo" fx:id="btnUndo" styleClass="secondary-btn"/>
-            <Button text="Redo" fx:id="btnRedo" styleClass="secondary-btn"/>
-            <Button text="Apply Transform" fx:id="btnApply" styleClass="apply-btn"/>
+
+            <!-- Buttons group -->
+            <HBox spacing="7">
+                <Button text="Reset" fx:id="btnReset" styleClass="primary-btn"/>
+                <Button text="Undo" fx:id="btnUndo" styleClass="secondary-btn"/>
+                <Button text="Redo" fx:id="btnRedo" styleClass="secondary-btn"/>
+                <Button text="Apply" fx:id="btnApply" styleClass="apply-btn"/>
+            </HBox>
         </HBox>
     </top>
 
+    <!-- SIDEBAR -->
     <left>
-        <VBox spacing="20" styleClass="sidebar">
-            <padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
+        <StackPane fx:id="sidebarContainer" prefWidth="340">
+            <ScrollPane fitToWidth="true" styleClass="sidebar-scroll" hbarPolicy="NEVER">
+                <VBox fx:id="sidebarContent"
+                      spacing="25"
+                      styleClass="sidebar"
+                      alignment="TOP_CENTER">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
 
-            <!-- SCALE -->
-            <VBox spacing="10" styleClass="card">
-                <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
-                <CheckBox fx:id="cbScale" text="Scale" styleClass="card-title"/>
+                    <!-- SCALE -->
+                    <VBox spacing="12" styleClass="card">
+                        <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+                        <CheckBox fx:id="cbScale" text="Scale" styleClass="card-title"/>
+                        <GridPane hgap="10" vgap="10">
+                            <Label text="SX:"/>
+                            <Slider fx:id="sliderSx" min="0.1" max="5" value="1"/>
+                            <Label fx:id="labelSx" text="1"/>
 
-                <GridPane hgap="10" vgap="10">
-                    <Label text="SX:"/>
-                    <Slider fx:id="sliderSx" min="0.1" max="5" value="1"/>
-                    <Label fx:id="labelSx" text="1"/>
+                            <Label text="SY:" GridPane.rowIndex="1"/>
+                            <Slider fx:id="sliderSy" min="0.1" max="5" value="1" GridPane.rowIndex="1"/>
+                            <Label fx:id="labelSy" text="1" GridPane.rowIndex="1"/>
 
-                    <Label text="SY:" GridPane.rowIndex="1"/>
-                    <Slider fx:id="sliderSy" min="0.1" max="5" value="1" GridPane.rowIndex="1"/>
-                    <Label fx:id="labelSy" text="1" GridPane.rowIndex="1"/>
+                            <Label text="SZ:" GridPane.rowIndex="2"/>
+                            <Slider fx:id="sliderSz" min="0.1" max="5" value="1" GridPane.rowIndex="2"/>
+                            <Label fx:id="labelSz" text="1" GridPane.rowIndex="2"/>
+                        </GridPane>
+                    </VBox>
 
-                    <Label text="SZ:" GridPane.rowIndex="2"/>
-                    <Slider fx:id="sliderSz" min="0.1" max="5" value="1" GridPane.rowIndex="2"/>
-                    <Label fx:id="labelSz" text="1" GridPane.rowIndex="2"/>
-                </GridPane>
-            </VBox>
+                    <!-- ROTATE -->
+                    <VBox spacing="12" styleClass="card">
+                        <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+                        <CheckBox fx:id="cbRotate" text="Rotate (°)" styleClass="card-title"/>
+                        <GridPane hgap="10" vgap="10">
+                            <Label text="RX:"/>
+                            <Slider fx:id="sliderRx" min="-180" max="180" value="0"/>
+                            <Label fx:id="labelRx" text="0°"/>
 
-            <!-- ROTATE -->
-            <VBox spacing="10" styleClass="card">
-                <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
-                <CheckBox fx:id="cbRotate" text="Rotate (°)" styleClass="card-title"/>
+                            <Label text="RY:" GridPane.rowIndex="1"/>
+                            <Slider fx:id="sliderRy" min="-180" max="180" value="0" GridPane.rowIndex="1"/>
+                            <Label fx:id="labelRy" text="0°" GridPane.rowIndex="1"/>
 
-                <GridPane hgap="10" vgap="10">
-                    <Label text="RX:"/>
-                    <Slider fx:id="sliderRx" min="-180" max="180" value="0"/>
-                    <Label fx:id="labelRx" text="0°"/>
+                            <Label text="RZ:" GridPane.rowIndex="2"/>
+                            <Slider fx:id="sliderRz" min="-180" max="180" value="0" GridPane.rowIndex="2"/>
+                            <Label fx:id="labelRz" text="0°" GridPane.rowIndex="2"/>
+                        </GridPane>
+                    </VBox>
 
-                    <Label text="RY:" GridPane.rowIndex="1"/>
-                    <Slider fx:id="sliderRy" min="-180" max="180" value="0" GridPane.rowIndex="1"/>
-                    <Label fx:id="labelRy" text="0°" GridPane.rowIndex="1"/>
+                    <!-- SHEAR -->
+                    <VBox spacing="12" styleClass="card">
+                        <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+                        <CheckBox fx:id="cbShear" text="Shear" styleClass="card-title"/>
+                        <GridPane hgap="10" vgap="10">
+                            <Label text="XY:"/>
+                            <Slider fx:id="sliderShXY" min="-2" max="2" value="0"/>
+                            <Label fx:id="labelShXY" text="0"/>
 
-                    <Label text="RZ:" GridPane.rowIndex="2"/>
-                    <Slider fx:id="sliderRz" min="-180" max="180" value="0" GridPane.rowIndex="2"/>
-                    <Label fx:id="labelRz" text="0°" GridPane.rowIndex="2"/>
-                </GridPane>
-            </VBox>
+                            <Label text="XZ:" GridPane.rowIndex="1"/>
+                            <Slider fx:id="sliderShXZ" min="-2" max="2" value="0" GridPane.rowIndex="1"/>
+                            <Label fx:id="labelShXZ" text="0" GridPane.rowIndex="1"/>
 
-            <!-- SHEAR -->
-            <VBox spacing="10" styleClass="card">
-                <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+                            <Label text="YX:" GridPane.rowIndex="2"/>
+                            <Slider fx:id="sliderShYX" min="-2" max="2" value="0" GridPane.rowIndex="2"/>
+                            <Label fx:id="labelShYX" text="0" GridPane.rowIndex="2"/>
 
-                <CheckBox fx:id="cbShear" text="Shear" styleClass="card-title"/>
+                            <Label text="YZ:" GridPane.rowIndex="3"/>
+                            <Slider fx:id="sliderShYZ" min="-2" max="2" value="0" GridPane.rowIndex="3"/>
+                            <Label fx:id="labelShYZ" text="0" GridPane.rowIndex="3"/>
 
-                <GridPane hgap="10" vgap="10">
-                    <Label text="XY:"/>
-                    <Slider fx:id="sliderShXY" min="-2" max="2" value="0"/>
-                    <Label fx:id="labelShXY" text="0"/>
+                            <Label text="ZX:" GridPane.rowIndex="4"/>
+                            <Slider fx:id="sliderShZX" min="-2" max="2" value="0" GridPane.rowIndex="4"/>
+                            <Label fx:id="labelShZX" text="0" GridPane.rowIndex="4"/>
 
-                    <Label text="XZ:" GridPane.rowIndex="1"/>
-                    <Slider fx:id="sliderShXZ" min="-2" max="2" value="0" GridPane.rowIndex="1"/>
-                    <Label fx:id="labelShXZ" text="0" GridPane.rowIndex="1"/>
+                            <Label text="ZY:" GridPane.rowIndex="5"/>
+                            <Slider fx:id="sliderShZY" min="-2" max="2" value="0" GridPane.rowIndex="5"/>
+                            <Label fx:id="labelShZY" text="0" GridPane.rowIndex="5"/>
+                        </GridPane>
+                    </VBox>
 
-                    <Label text="YX:" GridPane.rowIndex="2"/>
-                    <Slider fx:id="sliderShYX" min="-2" max="2" value="0" GridPane.rowIndex="2"/>
-                    <Label fx:id="labelShYX" text="0" GridPane.rowIndex="2"/>
-
-                    <Label text="YZ:" GridPane.rowIndex="3"/>
-                    <Slider fx:id="sliderShYZ" min="-2" max="2" value="0" GridPane.rowIndex="3"/>
-                    <Label fx:id="labelShYZ" text="0" GridPane.rowIndex="3"/>
-
-                    <Label text="ZX:" GridPane.rowIndex="4"/>
-                    <Slider fx:id="sliderShZX" min="-2" max="2" value="0" GridPane.rowIndex="4"/>
-                    <Label fx:id="labelShZX" text="0" GridPane.rowIndex="4"/>
-
-                    <Label text="ZY:" GridPane.rowIndex="5"/>
-                    <Slider fx:id="sliderShZY" min="-2" max="2" value="0" GridPane.rowIndex="5"/>
-                    <Label fx:id="labelShZY" text="0" GridPane.rowIndex="5"/>
-                </GridPane>
-            </VBox>
-
-            <!-- REFLECT -->
-            <VBox spacing="10" styleClass="card">
-                <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
-
-                <CheckBox fx:id="cbReflect" text="Reflection" styleClass="card-title"/>
-
-                <VBox spacing="5">
-                    <CheckBox fx:id="cbRefX" text="Reflect X"/>
-                    <CheckBox fx:id="cbRefY" text="Reflect Y"/>
-                    <CheckBox fx:id="cbRefZ" text="Reflect Z"/>
+                    <!-- REFLECT -->
+                    <VBox spacing="12" styleClass="card">
+                        <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+                        <CheckBox fx:id="cbReflect" text="Reflection" styleClass="card-title"/>
+                        <VBox spacing="6">
+                            <CheckBox fx:id="cbRefX" text="Reflect X"/>
+                            <CheckBox fx:id="cbRefY" text="Reflect Y"/>
+                            <CheckBox fx:id="cbRefZ" text="Reflect Z"/>
+                        </VBox>
+                    </VBox>
                 </VBox>
-            </VBox>
-
-        </VBox>
+            </ScrollPane>
+        </StackPane>
     </left>
 
+    <!-- RIGHT PANEL -->
+    <right>
+        <VBox spacing="8" style="-fx-background-color:#e5f2ff;">
+            <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+            <Label text="Execution Trace"
+                   style="-fx-font-size:16; -fx-font-weight:bold;"/>
+            <TextArea fx:id="traceArea"
+                      wrapText="true"
+                      prefWidth="230"
+                      prefHeight="700"
+                      style="-fx-control-inner-background:#f8fcff; -fx-font-family:'Consolas';"/>
+        </VBox>
+    </right>
+
+    <!-- CENTER CANVAS -->
     <center>
         <StackPane styleClass="canvas-container">
             <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
             <Canvas fx:id="canvas" width="900" height="650"/>
         </StackPane>
     </center>
-
 </BorderPane>

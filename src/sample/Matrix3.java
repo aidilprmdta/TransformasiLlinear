@@ -40,4 +40,13 @@ public class Matrix3 {
         double nz = m[2][0]*v.x + m[2][1]*v.y + m[2][2]*v.z;
         return new Vector3(nx, ny, nz);
     }
+    public double[][] get() {
+        double[][] r = new double[3][3];
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                r[i][j] = this.m[i][j];
+            }
+        }
+        return r;
+    }
 }
