@@ -59,6 +59,21 @@
     -fx-font-weight: bold;
 }
 
+/* Semua label di sidebar / kartu */
+.card Label {
+    -fx-text-fill: #e7f6ff;
+}
+
+/* Label angka slider (value) */
+.card .label {
+    -fx-text-fill: #e7f6ff;
+}
+
+/* CheckBox di dalam card (Reflect X/Y/Z) */
+.card CheckBox {
+    -fx-text-fill: #e7f6ff;
+}
+
 /* ───────────────────────────── SLIDER ───────────────────────────── */
 .slider .track {
     -fx-background-color: rgba(255,255,255,0.18);
@@ -146,3 +161,10 @@
     -fx-background-color: transparent;
 }
 
+.grid-2col {
+    -fx-pref-width: 260;
+}
+
+.grid-2col > VBox {
+    -fx-pref-width: 120;
+}

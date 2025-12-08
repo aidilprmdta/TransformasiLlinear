@@ -60,7 +60,6 @@ public class Controller {
     // Position label
     @FXML private Label labelPosition;
 
-
     private boolean sidebarVisible = true;
 
     // Core objects
@@ -134,25 +133,29 @@ public class Controller {
     }
 
     private void toggleSidebar() {
-        double targetWidth = sidebarVisible ? 0 : 350;
 
-        Timeline timeline = new Timeline();
-        KeyValue kv = new KeyValue(sidebarContainer.prefWidthProperty(), targetWidth, Interpolator.EASE_BOTH);
-        KeyFrame kf = new KeyFrame(Duration.millis(280), kv);
-        timeline.getKeyFrames().add(kf);
-        timeline.play();
+        if (sidebarVisible) {
+            sidebarContent.setManaged(false);
+        } else {
+            sidebarContent.setManaged(true);
+        }
 
-        // Fade
-        Timeline fade = new Timeline();
-        KeyValue fval = new KeyValue(sidebarContent.opacityProperty(), sidebarVisible ? 0 : 1, Interpolator.EASE_IN);
-        fade.getKeyFrames().add(new KeyFrame(Duration.millis(240), fval));
-        fade.play();
+        double end = sidebarVisible ? 0 : 300;
 
+        Timeline anim = new Timeline(
+                new KeyFrame(Duration.millis(350),
+                        new KeyValue(sidebarContainer.prefWidthProperty(), end, Interpolator.EASE_BOTH)
+                ),
+                new KeyFrame(Duration.millis(300),
+                        new KeyValue(sidebarContent.opacityProperty(), sidebarVisible ? 0 : 1)
+                )
+        );
+
+        anim.play();
         sidebarVisible = !sidebarVisible;
-
-        // Update icon
         btnToggleSidebar.setText(sidebarVisible ? "≡" : "▶");
     }
+
 
     // ---------- Bind helpers ----------
     private void bindSlider(Slider s, Label l, String fmt) {
